@@ -3,6 +3,8 @@ import Hand from './components/Hand';
 import ScoreBoard from './components/ScoreBoard';
 import JokerSelector from './components/JokerSelector';
 import ActiveJokers from './components/ActiveJokers';
+import MainMenu from './components/MainMenu';
+import GameOver from './components/GameOver';
 import { createDeck } from './data/deck';
 import { shuffleDeck, dealCards, replaceSelectedCards } from './utils/deckUtils';
 import { evaluateHand, getTargetScore } from './utils/scoreUtils';
@@ -13,12 +15,13 @@ const HAND_SIZE = 8;
 const MAX_SELECTED = 5;
 
 const PHASE = {
+  MENU:         'menu',
   PLAYING:      'playing',
   JOKER_SELECT: 'joker_select',
   GAME_OVER:    'game_over',
 };
 
-function initGame() {
+function buildFreshGame() {
   const shuffled = shuffleDeck(createDeck());
   const { hand, remainingDeck } = dealCards(shuffled, HAND_SIZE);
   return {
@@ -36,8 +39,22 @@ function initGame() {
 }
 
 function App() {
-  const [state, setState] = useState(initGame);
+  const [state, setState] = useState({ phase: PHASE.MENU });
 
+  // ── Iniciar / reiniciar partida ──
+  const handleStart = useCallback(() => {
+    setState(buildFreshGame());
+  }, []);
+
+  const handleRestart = useCallback(() => {
+    setState(buildFreshGame());
+  }, []);
+
+  const handleGoMenu = useCallback(() => {
+    setState({ phase: PHASE.MENU });
+  }, []);
+
+  // ── Toggle selección de carta ──
   const handleCardClick = useCallback((cardId) => {
     setState((prev) => {
       if (prev.phase !== PHASE.PLAYING) return prev;
@@ -50,6 +67,7 @@ function App() {
     });
   }, []);
 
+  // ── Jugar mano ──
   const handlePlayHand = useCallback(() => {
     setState((prev) => {
       if (prev.selectedIds.length === 0 || prev.phase !== PHASE.PLAYING) return prev;
@@ -72,8 +90,7 @@ function App() {
         prev.deck
       );
 
-      const deckExhausted = newRemainingDeck.length === 0;
-      const isGameOver = !roundWon && deckExhausted;
+      const isGameOver = !roundWon && newRemainingDeck.length === 0;
 
       let nextPhase = PHASE.PLAYING;
       if (isGameOver) nextPhase = PHASE.GAME_OVER;
@@ -98,6 +115,7 @@ function App() {
     });
   }, []);
 
+  // ── Elegir joker y avanzar ronda ──
   const handleJokerSelect = useCallback((jokerId) => {
     setState((prev) => {
       const nextRound = prev.round + 1;
@@ -124,35 +142,45 @@ function App() {
     });
   }, []);
 
-  const handleRestart = useCallback(() => {
-    setState(initGame());
-  }, []);
+  const { phase } = state;
+
+  // ── MENÚ ──
+  if (phase === PHASE.MENU) {
+    return <MainMenu onStart={handleStart} />;
+  }
 
   const {
     hand, selectedIds, round, currentScore, targetScore,
-    lastHandResult, phase, ownedJokerIds, jokerOptions, deck,
+    lastHandResult, ownedJokerIds, jokerOptions, deck,
   } = state;
 
   return (
     <div className="app">
       <header className="app-header">
         <h1 className="app-title">NOT BALATRO</h1>
-        <p className="app-subtitle">Ronda {round}</p>
+        <div className="app-header-right">
+          <span className="app-subtitle">Ronda {round}</span>
+          <button className="btn-restart" onClick={handleRestart} title="Reiniciar partida">
+            🔄
+          </button>
+        </div>
       </header>
 
       <main className="app-main">
 
+        {/* ── GAME OVER ── */}
         {phase === PHASE.GAME_OVER && (
-          <div className="overlay game-over">
-            <h2>💀 GAME OVER</h2>
-            <p>No lograste llegar a <strong>{targetScore}</strong> puntos en la ronda {round}.</p>
-            <p className="overlay-sub">Llegaste a <strong>{currentScore}</strong> pts.</p>
-            <button className="btn btn-primary" onClick={handleRestart}>
-              Jugar de nuevo
-            </button>
-          </div>
+          <GameOver
+            round={round}
+            currentScore={currentScore}
+            targetScore={targetScore}
+            ownedJokerIds={ownedJokerIds}
+            onRestart={handleRestart}
+            onMenu={handleGoMenu}
+          />
         )}
 
+        {/* ── SELECCIÓN DE JOKER ── */}
         {phase === PHASE.JOKER_SELECT && (
           <JokerSelector
             options={jokerOptions}
@@ -160,6 +188,7 @@ function App() {
           />
         )}
 
+        {/* ── JUGANDO ── */}
         {phase === PHASE.PLAYING && (
           <>
             <ScoreBoard
