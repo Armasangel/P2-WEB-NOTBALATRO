@@ -1,0 +1,167 @@
+.gameover {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: goFadeIn 0.4s ease;
+}
+
+@keyframes goFadeIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.gameover-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  padding: 16px;
+}
+
+.gameover-skull {
+  font-size: 64px;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.08); }
+}
+
+.gameover-title {
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #e74c3c;
+  text-shadow: 0 0 30px rgba(231, 76, 60, 0.4);
+  margin: 0;
+}
+
+.gameover-subtitle {
+  font-size: 13px;
+  color: #888;
+  font-family: sans-serif;
+  margin-top: -10px;
+}
+
+/* Stats */
+.gameover-stats {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-family: sans-serif;
+}
+
+.stat-row:last-child {
+  border-bottom: none;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #888;
+}
+
+.stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f0f0f0;
+  font-family: 'Georgia', serif;
+}
+
+.stat-value.score  { color: #4cde8f; }
+.stat-value.target { color: #f5c518; }
+.stat-value.diff   { color: #e74c3c; }
+
+/* Jokers obtenidos */
+.gameover-jokers {
+  width: 100%;
+}
+
+.gameover-jokers-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+  font-family: sans-serif;
+  margin-bottom: 10px;
+}
+
+.gameover-jokers-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.gameover-joker-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(245, 197, 24, 0.1);
+  border: 1px solid rgba(245, 197, 24, 0.3);
+  border-radius: 999px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: #f5c518;
+  font-family: sans-serif;
+  font-weight: 600;
+}
+
+/* Botones */
+.gameover-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.btn-go {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: sans-serif;
+  letter-spacing: 0.04em;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+.btn-go:active {
+  transform: scale(0.97);
+}
+
+.btn-go-primary {
+  background: #f5c518;
+  color: #111;
+}
+
+.btn-go-primary:hover {
+  opacity: 0.88;
+}
+
+.btn-go-secondary {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #888;
+}
+
+.btn-go-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ccc;
+}

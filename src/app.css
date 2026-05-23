@@ -1,0 +1,181 @@
+/* ── Reset & Variables ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-dark:    #0d1117;
+  --bg-table:   #1a2e1a;
+  --gold:       #f5c518;
+  --green:      #4cde8f;
+  --red:        #e74c3c;
+  --text:       #f0f0f0;
+  --text-muted: #888;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text);
+  font-family: 'Georgia', serif;
+  min-height: 100vh;
+}
+
+/* ── App layout ── */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Header ── */
+.app-header {
+  text-align: center;
+  padding: 28px 16px 10px;
+}
+
+.app-title {
+  font-size: clamp(28px, 6vw, 52px);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  text-shadow: 0 0 30px rgba(245, 197, 24, 0.4);
+  text-transform: uppercase;
+}
+
+.app-subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+.app-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.btn-restart {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #888;
+  font-size: 16px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  line-height: 1;
+}
+
+.btn-restart:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ccc;
+}
+
+/* ── Main ── */
+.app-main {
+  width: 100%;
+  max-width: 900px;
+  padding: 0 16px 40px;
+  flex: 1;
+  position: relative;
+}
+
+/* ── Action bar ── */
+.action-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.selection-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: sans-serif;
+}
+
+/* ── Buttons ── */
+.btn {
+  padding: 12px 32px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  letter-spacing: 0.04em;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: #111;
+}
+
+.btn-primary:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+/* ── Overlays (game over / round won) ── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  border-radius: 16px;
+  text-align: center;
+  padding: 32px;
+  z-index: 10;
+}
+
+.game-over {
+  background: rgba(13, 17, 23, 0.92);
+  border: 2px solid var(--red);
+}
+
+.game-over h2 {
+  font-size: 36px;
+  color: var(--red);
+}
+
+.round-won {
+  background: rgba(13, 17, 23, 0.92);
+  border: 2px solid var(--green);
+}
+
+.round-won h2 {
+  font-size: 36px;
+  color: var(--green);
+}
+
+.overlay p {
+  font-size: 16px;
+  color: var(--text-muted);
+  font-family: sans-serif;
+}
+
+.overlay p strong {
+  color: var(--text);
+}
+
+.overlay-sub {
+  font-size: 13px;
+  margin-top: -8px;
+}

@@ -1,0 +1,9 @@
+.hand {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 30px 20px 50px;   /* padding-bottom extra para que las cartas seleccionadas no se corten */
+  min-height: 200px;
+  align-items: flex-end;
+}
