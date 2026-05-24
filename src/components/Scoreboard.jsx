@@ -1,3 +1,4 @@
+import React from 'react';
 import './ScoreBoard.css';
 
 //Muestra información de la ronda actual.

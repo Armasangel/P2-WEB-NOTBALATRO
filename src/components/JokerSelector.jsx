@@ -1,3 +1,4 @@
+import React from 'react';
 import './JokerSelector.css';
 
 //Pantalla que aparece al terminar una ronda.

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useCallback } from 'react';
 import Hand from './components/Hand';
 import ScoreBoard from './components/ScoreBoard';

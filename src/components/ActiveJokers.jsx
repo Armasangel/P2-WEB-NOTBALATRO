@@ -1,3 +1,4 @@
+import React from 'react';
 import { JOKER_POOL } from '../data/jokers';
 import './ActiveJokers.css';
 

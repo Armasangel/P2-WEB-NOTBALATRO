@@ -1,16 +1,8 @@
+import React from 'react';
 import { JOKER_POOL } from '../data/jokers';
 import './GameOver.css';
 
-/**
- * Pantalla de Game Over con resumen de la partida.
- * Props:
- *  - round: ronda en la que terminó
- *  - currentScore: puntaje alcanzado en la última ronda
- *  - targetScore: puntaje que había que alcanzar
- *  - ownedJokerIds: jokers acumulados durante la partida
- *  - onRestart: función para reiniciar
- *  - onMenu: función para volver al menú
- */
+// Pantalla de Game Over con resumen de la partida.
 function GameOver({ round, currentScore, targetScore, ownedJokerIds, onRestart, onMenu }) {
   const ownedJokers = ownedJokerIds
     .map((id) => JOKER_POOL.find((j) => j.id === id))
